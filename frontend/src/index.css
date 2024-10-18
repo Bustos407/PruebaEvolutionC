@@ -1,0 +1,32 @@
+/* index.css */
+
+/* Estilos generales para la aplicación */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0; /* Color de fondo suave */
+    color: #333; /* Color de texto */
+}
+
+/* Estilos para el contenedor principal */
+div {
+    padding: 20px; /* Espaciado interno */
+    max-width: 800px; /* Ancho máximo */
+    margin: auto; /* Centrar el contenedor */
+    background-color: #fff; /* Fondo blanco para el contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Estilos para los encabezados */
+h1 {
+    font-size: 2em; /* Tamaño del texto */
+    color: #4A90E2; /* Color del encabezado */
+}
+
+/* Estilos para los párrafos */
+p {
+    font-size: 1em; /* Tamaño del texto del párrafo */
+    line-height: 1.5; /* Altura de línea */
+}
