@@ -8,7 +8,7 @@ from config import Config
 # Inicialización de la aplicación Flask
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 swagger = Swagger(app)
 db.init_app(app)
 
@@ -217,6 +217,62 @@ def obtener_autores():
     """
     autores = Autor.query.all()
     return jsonify([{'id': autor.id, 'nombre': autor.nombre} for autor in autores]), 200
+
+
+@app.route('/autores/<int:id>', methods=['PUT'])
+def actualizar_autor(id):
+    """Actualiza un autor existente en la base de datos.
+    ---
+    tags:
+      - Autores
+    parameters:
+      - name: id
+        in: path
+        type: integer
+        required: true
+        description: ID del autor a actualizar
+      - name: autor
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            nombre:
+              type: string
+    responses:
+      200:
+        description: Autor actualizado
+        schema:
+          type: object
+          properties:
+            mensaje:
+              type: string
+      404:
+        description: Autor no encontrado
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+      400:
+        description: No se proporcionaron datos para actualizar
+        schema:
+          type: object
+          properties:
+            error:
+              type: string
+    """
+    data = request.get_json()
+    autor = Autor.query.get(id)
+    if autor is None:
+        return jsonify({'error': 'Autor no encontrado.'}), 404
+    if not data:
+        return jsonify({'error': 'No se proporcionaron datos para actualizar.'}), 400
+    if 'nombre' in data: 
+        autor.nombre = data['nombre']
+    db.session.commit()
+    return jsonify({'mensaje': 'Autor actualizado'}), 200
+
 
 # Bloque principal que inicia la aplicación
 if __name__ == '__main__':
